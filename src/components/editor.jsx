@@ -1,8 +1,8 @@
 import * as React from "react";
-import "trix/dist/trix";
-import "trix/dist/trix.css";
+// import "trix/dist/trix";
+// import "trix/dist/trix.css";
 import { TrixEditor } from "react-trix";
-import {Button, Box, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
+import { Button, Box, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 import docsModel from '../models/docs';
 import { useEffect, useState } from 'react';
 

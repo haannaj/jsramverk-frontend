@@ -3,7 +3,6 @@ const docsModel = {
         "http://localhost:3003" :
         "https://jsramverk-editor-hajh20.azurewebsites.net",
     getAllDoc: async function getAllDoc() {
-        console.log(window.location.href)
         const response = await fetch(`${docsModel.baseUrl}/`);
 
         const allDocs = await response.json();
