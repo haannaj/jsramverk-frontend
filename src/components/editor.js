@@ -1,16 +1,17 @@
 import * as React from "react";
-// import "trix/dist/trix";
-// import "trix/dist/trix.css";
+import "trix";
+import "trix/dist/trix.css";
+
 import { TrixEditor } from "react-trix";
 import { Button, Box, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 import docsModel from '../models/docs';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 
 const EditorDocs = () => {
-  const [saveEdit, setSaveEdit] = useState('');
-  const [allDocs, setAllDocs] = useState(null);
-  const [index, setIndex] = useState('');
+  const [allDocs, setAllDocs] = React.useState(null);
+  const [saveEdit, setSaveEdit] = React.useState('');
+  const [index, setIndex] = React.useState('');
   const element = document.querySelector("trix-editor");
   let str = 'namn: Snusmumriken \n bor: Mumindalen';
 
@@ -20,6 +21,7 @@ const EditorDocs = () => {
   };
   
   const handleClick = (event) => {
+
     const newObject = {};
     let newDoc = saveEdit.replace(/\r/g, "").split(/\n/);
 
@@ -74,6 +76,7 @@ const EditorDocs = () => {
 
   return (
     <>
+    
     <Box sx={{
           bgcolor: '#003163',
           textAlign: 'center',
@@ -87,10 +90,10 @@ const EditorDocs = () => {
           margin: '2rem'
        }}  >
         <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Välj dokument att updatera</InputLabel>
+          <InputLabel aria-labelledby="demo-simple-select" >Välj dokument att updatera</InputLabel>
           
             <Select
-                labelId="demo-simple-select-label"
+                labelId="demo-simple-select"
                 id="demo-simple-select"
                 value={index}
                 label="Välj dokument att updatera"
@@ -109,12 +112,13 @@ const EditorDocs = () => {
       
       
       <TrixEditor 
+        className="trix-texteditor"
         placeholder={str}
         onChange={handleChange} 
         onEditorReady={handleEditorReady}
       />
       <br/>
-      <Button variant='contained' sx={{ margin: '1em 0' }} onClick={handleClick}>Skapa nytt dokument</Button>
+      <Button id="create" variant='contained' sx={{ margin: '1em 0' }} onClick={handleClick}>Skapa nytt dokument</Button>
       <Button variant='contained' sx={{ margin: '1em' }} onClick={handleUpdate}>Updatera valt dokument</Button>
       <Button variant='contained' sx={{ margin: '1em 0' }} onClick={handleEditorAll}>Visa alla dokument</Button>
       </Box>
