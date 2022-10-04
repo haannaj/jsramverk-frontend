@@ -2,9 +2,12 @@
 import * as React from "react";
 import { act } from "react-dom/test-utils";
 import EditorDocs from "./editor";
+import { unmountComponentAtNode } from "react-dom";
 import '@testing-library/jest-dom/extend-expect';
+import { docsModel } from '../models/docs';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { render, screen, fireEvent, waitFor, getByRole } from '@testing-library/react';
 
 
 
