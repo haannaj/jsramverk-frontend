@@ -1,6 +1,6 @@
 const docsModel = {
-    baseUrl: window.location.href.includes("X") ?
-        "http://localhost:3003" :
+    baseUrl: window.location.href.includes("localhost") ?
+        "http://localhost:3132" :
         "https://jsramverk-editor-hajh20.azurewebsites.net",
     getAllDoc: async function getAllDoc() {
 
@@ -8,7 +8,6 @@ const docsModel = {
 
         const allDocs = await response.json();
 
-        console.log(allDocs.data)
         return allDocs.data;
     },
     saveDoc: async function saveDoc(newDoc) {
@@ -22,7 +21,7 @@ const docsModel = {
         });
 
         window.location.reload();
-        const result = await response.json();
+        await response.json();
     },
     updateDoc: async function updateDoc(doc) {
 
