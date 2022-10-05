@@ -1,5 +1,5 @@
 const docsModel = {
-    baseUrl: window.location.href.includes("localhost") ?
+    baseUrl: window.location.href.includes("X") ?
         "http://localhost:3132" :
         "https://jsramverk-editor-hajh20.azurewebsites.net",
     getAllDoc: async function getAllDoc() {

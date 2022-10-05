@@ -10,7 +10,7 @@ import { Divider } from '@mui/material';
 import { io } from "socket.io-client";
 
 let sendToSocket = false;
-let theIndex = null;
+let theIndex = '';
 
 
 function changeSendToSocket(value) {
@@ -63,10 +63,6 @@ const EditorDocs = () => {
             "data": text });
 
     setSaveEdit(text);
-
-    if (index==='') {
-      changeSendToSocket(false); 
-    }
   };
   
   const handleEditorReady = (editor) => {
@@ -108,7 +104,7 @@ const EditorDocs = () => {
 
       }
       changeSendToSocket(true);
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [saveEdit]);
 
 
@@ -134,6 +130,8 @@ const EditorDocs = () => {
 
 
   useEffect(() => {
+    
+
 
     if (socket) {
       socket.on("amount", function (data) {
@@ -148,7 +146,7 @@ const EditorDocs = () => {
         
       })
     };
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   
