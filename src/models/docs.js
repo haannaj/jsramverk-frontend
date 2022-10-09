@@ -1,10 +1,16 @@
+import App from './../App';
+
 const docsModel = {
-    baseUrl: window.location.href.includes("X") ?
+    baseUrl: window.location.href.includes("localhost") ?
         "http://localhost:3132" :
         "https://jsramverk-editor-hajh20.azurewebsites.net",
-    getAllDoc: async function getAllDoc() {
+    getAllDoc: async function getAllDoc(token) {
 
-        const response = await fetch(`${docsModel.baseUrl}/`);
+        const response = await fetch(`${docsModel.baseUrl}/`, {            
+            headers: {
+                'x-access-token': token,
+            }
+        });
 
         const allDocs = await response.json();
 
@@ -20,8 +26,9 @@ const docsModel = {
             method: 'POST'
         });
 
-        window.location.reload();
-        await response.json();
+        response.json();
+        return;
+
     },
     updateDoc: async function updateDoc(doc) {
 
@@ -33,7 +40,20 @@ const docsModel = {
             method: 'PUT'
         });
 
-        window.location.reload();
+        return;
+
+    },
+    getDocById: async function getDocById(token, userID) {
+
+        const response = await fetch(`${docsModel.baseUrl}/usersdoc/${userID}`, {       
+            headers: {
+                'x-access-token': token,
+            }
+        });
+
+        const allDocs = await response.json();
+
+        return allDocs.data;
 
     }
 };
