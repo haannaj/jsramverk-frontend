@@ -54,7 +54,8 @@ export default function Users({setOwnersName, owners}) {
 
 
   async function fetchUsers() {
-    const result = await authModel.getAllUsers();
+    const result = await authModel.getUserGraphql();
+
     const arr = []
 
     {result.map((users, index) => 

@@ -42,6 +42,7 @@ export default function Login({setToken, setUserId}) {
             <TextField
                 label="Lösenord"
                 name="password"
+                type="password"
                 onChange={changeHandler}
                 sx={{ margin: '1em 0.5em' }}
             />

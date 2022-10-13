@@ -50,11 +50,13 @@ export default function Register({setToken, setUserId}) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Registrera dig med email och lösenord"}
+
+        
+        <DialogContent sx={{ border: '1px solid black', borderRadius: "4px" }}>
+        <DialogTitle id="alert-dialog-title" sx={{ fontWeight: "bold", textAlign: "center" }}>
+          {"Registrera med email och lösenord"}
         </DialogTitle>
-        <DialogContent>
-        <Box sx={{ textAlign: "center", padding: '3em 4em'}} >
+        <Box sx={{ textAlign: "center", padding: '2em 4em' }} >
             <TextField
                 label="Email"
                 name="email"
@@ -63,6 +65,7 @@ export default function Register({setToken, setUserId}) {
             />
             <TextField
                 label="Lösenord"
+                type="password"
                 name="password"
                 onChange={changeHandler}
                 sx={{ width: '100%', margin: "1em 0"}}
@@ -85,7 +88,9 @@ export default function Register({setToken, setUserId}) {
                 Avbryt registrering
             </Link>
         </DialogContent>
+
       </Dialog>
-    </div>
+
+      </div>
     );
 }

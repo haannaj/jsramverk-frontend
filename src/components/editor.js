@@ -62,7 +62,6 @@ const EditorDocs = (token) => {
   async function fetchDocs() {
     const docs = await docsModel.getDocById(token.token, token.userID);
 
-    // const docs = await docsModel.getAllDoc(token.token);
     setAllDocs(docs)
   };
   

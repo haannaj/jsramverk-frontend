@@ -10,6 +10,25 @@ const authModel = {
 
         return allUsers.data;
     },
+    getUserGraphql: async function getUserGraphql() {
+
+        const response = await fetch(`${authModel.baseUrl}/graphql`, {     
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query: `{ users {
+                email
+              }}` })
+        })
+        
+        const res = await response.json();
+
+        return res.data.users;
+
+
+    },
     login: async function login(user) {
         const response = await fetch(`${authModel.baseUrl}/auth/login`, {
             method: 'POST',
