@@ -17,10 +17,6 @@ export default function Login({setToken, setUserId}) {
         setUser({...user, ...newObject});
     };
 
-    const handleRegister = () => {
-        
-    };
-
     async function handleLogin() {
         const loginResult = await authModel.login(user)
 

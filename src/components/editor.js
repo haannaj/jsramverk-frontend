@@ -11,6 +11,12 @@ import { Card, Typography, Grid } from '@mui/material';
 import { io } from "socket.io-client";
 import AddIcon from '@mui/icons-material/Add';
 import Users from "./users";
+import PdfComponent from "./pdffile";
+// import ReactToPdf from "react-to-pdf";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+
+
+
 
 let sendToSocket = false;
 let theIndex = null;
@@ -40,7 +46,7 @@ const EditorDocs = (token) => {
   const [owners, setOwners] = React.useState('');
   const [ownersName, setOwnersName] = React.useState([]);
   const buttonSection = React.useRef(null);
-
+  
 
   // Scrolldown function
   const scrollDown = (ref) => {
@@ -54,7 +60,9 @@ const EditorDocs = (token) => {
   const updateEditor = (x) => {
     element.editor.setSelectedRange([0, 10000])
     element.editor.deleteInDirection("backwards")
-    element.editor.insertString(x)
+    // element.editor.insertString(x)
+    element.editor.insertHTML(x)
+
   };
 
 
@@ -92,15 +100,30 @@ const EditorDocs = (token) => {
 
   // Handle when change in editor
   const handleChange = (editor, text) => {
+
     setShowUser(true);
 
     setAmount({ "index": index,
-            "data": text });
-    setSaveEdit(text);
+            "data": editor });
+    setSaveEdit(editor);
+
+    var rect = element.editor.getClientRectAtPosition(12)
+    var tret = element.editor.getSelectedRange()
+
+    console.log(tret)
+    console.log([rect.left, rect.top]);
+    console.log([tret.left]);
+
+    // setShowUser(true);
+
+    // setAmount({ "index": index,
+    //         "data": text });
+    // setSaveEdit(text);
   };
   
   // Handle editor when clicked document
   const handleEditorReady = (event) => {
+
     if (element!=null) {
       createIndex(event.target.value);
       docsIndex(event.target.value);
@@ -211,7 +234,8 @@ const EditorDocs = (token) => {
         bgcolor: 'white ',
         margin: '2rem 0',
         padding: '2em 15%'
-       }}  >
+       }}
+>
       <TextField
           label="Rubrik"
           value={headName}
@@ -246,6 +270,7 @@ const EditorDocs = (token) => {
           onClick={handleUpdate} 
           >Uppdatera {headName}
         </Button>
+      <PdfComponent text={saveEdit} header={headName} owner={owners} />
       </Box>
     </>
   );

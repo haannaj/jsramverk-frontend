@@ -1,10 +1,8 @@
 import React from 'react';
 import EditorDocs from './components/editor';
 import Login from './components/login';
-import authModel from './models/auth'
-import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Box, AppBar, Toolbar, IconButton, Button, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 

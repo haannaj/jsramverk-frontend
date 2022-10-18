@@ -58,9 +58,9 @@ export default function Users({setOwnersName, owners}) {
 
     const arr = []
 
-    {result.map((users, index) => 
+    result.map((users, index) => 
         arr.push(users['email'])
-    )}
+    )
 
     setNames(arr);
 
