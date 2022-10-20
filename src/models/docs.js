@@ -7,9 +7,9 @@ const docsModel = {
     getAllDoc: async function getAllDoc(token) {
 
         const response = await fetch(`${docsModel.baseUrl}/`, {            
-            headers: {
-                'x-access-token': token,
-            }
+            // headers: {
+            //     'x-access-token': token,
+            // }
         });
 
         const allDocs = await response.json();

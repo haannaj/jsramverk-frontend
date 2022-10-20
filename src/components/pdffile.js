@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Button } from '@mui/material';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 
 export default function PdfComponent({text, header, owner}) {
-  console.log(text)
 
   function printDiv() {
     var left = (window.screen.width/2);
@@ -26,9 +26,10 @@ export default function PdfComponent({text, header, owner}) {
     <>
     <Button 
     color="button"
-    sx={{ marginLeft: "1em" }}
+    sx={{ margin: "0 1em" }}
     className="btn-grad" 
     variant="contained"
+    startIcon={ <PictureAsPdfIcon />}
     disabled={(text==='')} 
     onClick={printDiv} 
       >Spara som PDF

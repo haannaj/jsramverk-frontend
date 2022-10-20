@@ -75,8 +75,7 @@ export default function Users({setOwnersName, owners}) {
   }, []);
 
   useEffect(() => {
-    if (owners) {
-
+    if (owners !== "") {
         handleTest(owners)
     } else {
         setPersonName([])
