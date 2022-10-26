@@ -20,7 +20,7 @@ const MenuProps = {
   },
 };
 
-
+// Style for list
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
@@ -35,15 +35,19 @@ export default function Users({setOwnersName, owners}) {
   const [names, setNames] = React.useState([]);
   const [personName, setPersonName] = React.useState([]);
 
+
+  // handle when user clicked
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
 
-    handleTest(value)
+    handleUsers(value)
   };
 
-  const handleTest = (value) => {
+
+  // handle all users
+  const handleUsers = (value) => {
     setPersonName(
         typeof value === 'string' ? value.split(',') : value,
       );
@@ -53,9 +57,9 @@ export default function Users({setOwnersName, owners}) {
     }
 
 
+  // fetch all users
   async function fetchUsers() {
     const result = await authModel.getUserGraphql();
-
     const arr = []
 
     result.map((users, index) => 
@@ -76,7 +80,7 @@ export default function Users({setOwnersName, owners}) {
 
   useEffect(() => {
     if (owners !== "") {
-        handleTest(owners)
+        handleUsers(owners)
     } else {
         setPersonName([])
     }

@@ -1,5 +1,3 @@
-import App from './../App';
-
 const docsModel = {
     baseUrl: window.location.href.includes("localhost") ?
         "http://localhost:3132" :
@@ -7,9 +5,9 @@ const docsModel = {
     getAllDoc: async function getAllDoc(token) {
 
         const response = await fetch(`${docsModel.baseUrl}/`, {            
-            // headers: {
-            //     'x-access-token': token,
-            // }
+            headers: {
+                'x-access-token': token,
+            }
         });
 
         const allDocs = await response.json();
@@ -55,25 +53,20 @@ const docsModel = {
 
         return allDocs.data;
 
+    },
+    updateDocComment: async function updateDocComment(doc) {
+
+        await fetch(`${docsModel.baseUrl}/updatecomments`, {
+            body: JSON.stringify(doc),
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'PUT'
+        });
+
+        return;
+
     }
-    // getDocByIdGraphql: async function getDocById(token, userID) {
-
-    //     const response = await fetch(`http://localhost:3132/graphql`, {     
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json',
-    //         },
-    //         body: JSON.stringify({ query: `{ doc(allowed_users: "test@test.se") {
-    //             namn
-    //             text
-    //             owner
-    //             allowed_users }}` })
-    //     })
-        
-    //     const res = await response.json();
-
-    // }
 };
 
 export default docsModel;

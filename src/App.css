@@ -16,6 +16,9 @@ html {
   color: #d9d9d9;
 }
 
+trix-editor {
+  min-height: 13em;
+}
 
 
 @media (prefers-reduced-motion: no-preference) {

@@ -4,6 +4,7 @@ import Login from './components/login';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { SnackbarProvider } from 'notistack';
 
 
 
@@ -33,30 +34,31 @@ function App() {
 
   return (
     <>
-    <ThemeProvider theme={theme}>
-      <Box sx={{
-          bgcolor: 'white',
-          textAlign: "center",
-          color: 'black',
-          padding: '1em',
-          marginBottom: '3em',
-          borderBottom: "1px solid Black"
-       }}  >
-      <h1>jsramverk</h1>
-      { token ? 
-      <Button sx={{position: "absolute", right: '2em', top: '2.7em', bgColor: "blue"}} color="inherit" onClick={handleClick}><LogoutIcon /></Button>
-      : null }
-      </Box>
-      { token ? 
-        <>
-        <EditorDocs token={token} userID={userID}/>
-        </>
-        :
-        <>
-        <Login setToken={setToken} setUserId={setUserId}/>
-        </>
-      }
-    </ThemeProvider>
+    
+      <ThemeProvider theme={theme}>
+        <Box sx={{
+            bgcolor: 'white',
+            textAlign: "center",
+            color: 'black',
+            padding: '1em',
+            marginBottom: '3em',
+            borderBottom: "1px solid Black"
+        }}  >
+        <h1>jsramverk</h1>
+        { token ? 
+        <Button sx={{position: "absolute", right: '2em', top: '2.7em' }} color="inherit" onClick={handleClick}><LogoutIcon /></Button>
+        : null }
+        </Box>
+        { token ? 
+          <>
+          <EditorDocs token={token} userID={userID}/>
+          </>
+          :
+          <>
+          <Login setToken={setToken} setUserId={setUserId}/>
+          </>
+        }
+      </ThemeProvider>
     </>
   );
 }

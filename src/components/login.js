@@ -4,11 +4,10 @@ import authModel from "../models/auth";
 import docsColor from '../models/colors';
 import Register from './register';
 
-
-
 export default function Login({setToken, setUserId}) {
     const [user, setUser] = React.useState({});
 
+    // handle forminput
     const changeHandler = (event) => {
         let newObject = {}
 
@@ -17,6 +16,7 @@ export default function Login({setToken, setUserId}) {
         setUser({...user, ...newObject});
     };
 
+    // handle sign in
     async function handleLogin() {
         const loginResult = await authModel.login(user)
 

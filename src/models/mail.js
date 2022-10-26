@@ -1,4 +1,3 @@
-
 const mailModel = {
     baseUrl: window.location.href.includes("localhost") ?
         "http://localhost:3132" :
@@ -13,12 +12,12 @@ const mailModel = {
                 "X-Powered-By": "ASP.NET"
             },
         })
-        .then(async function(){
+        .then(async function(response){
             const docId=doc['_id']
             const users=doc['allowed_users']
             users.push(userMail)
 
-            await fetch(`${mailModel.baseUrl}/api/update/${users}/${docId}`, {
+            const resUpdate = await fetch(`${mailModel.baseUrl}/api/update/${users}/${docId}`, {
                     method: 'POST',
                     headers: {
                         "Access-Control-Allow-Origin": "*",
@@ -26,11 +25,11 @@ const mailModel = {
                         "X-Powered-By": "ASP.NET"
                     },
                 });
-    
-            return;
+            
+            return [response.status, resUpdate.status];
     
         })
-        return;
+        return response;
     }
 };
 

@@ -8,14 +8,19 @@ export default function Register({setToken, setUserId}) {
     const [user, setUser] = React.useState({});
     const [open, setOpen] = React.useState(false);
 
+    // handle open registerdialog
     const handleClickOpen = () => {
       setOpen(true);
     };
   
+
+    // handle close registerdialog
     const handleClose = () => {
       setOpen(false);
     };
 
+
+    // handle input form
     const changeHandler = (event) => {
         let newObject = {}
 
@@ -24,6 +29,8 @@ export default function Register({setToken, setUserId}) {
         setUser({...user, ...newObject});
     };
 
+    
+    // handle registerbutton
     async function handleRegister() {
         await authModel.register(user);
         const loginResult = await authModel.login(user);
@@ -53,42 +60,41 @@ export default function Register({setToken, setUserId}) {
 
         
         <DialogContent sx={{ border: '1px solid black', borderRadius: "4px" }}>
-        <DialogTitle id="alert-dialog-title" sx={{ fontWeight: "bold", textAlign: "center" }}>
-          {"Registrera med email och lösenord"}
-        </DialogTitle>
-        <Box sx={{ textAlign: "center", padding: '2em 4em' }} >
-            <TextField
-                label="Email"
-                name="email"
-                onChange={changeHandler}
-                sx={{ width: '100%'}}
-            />
-            <TextField
-                label="Lösenord"
-                type="password"
-                name="password"
-                onChange={changeHandler}
-                sx={{ width: '100%', margin: "1em 0"}}
-            />
-            <br/>
-            <Button 
-                className="btn-grad" 
-                variant="contained"
-                sx={{ margin: '2em', backgroundImage: docsColor.getColor(1)}}
-                onClick={handleRegister} 
-                >Registrera användare
-            </Button>
-            <br/>
-        </Box>
-        <Link
-                component="button"
-                variant="body2"
-                onClick={handleClose}
-                >
-                Avbryt registrering
-            </Link>
+          <DialogTitle id="alert-dialog-title" sx={{ fontWeight: "bold", textAlign: "center" }}>
+            {"Registrera med email och lösenord"}
+          </DialogTitle>
+          <Box sx={{ textAlign: "center", padding: '2em 4em' }} >
+              <TextField
+                  label="Email"
+                  name="email"
+                  onChange={changeHandler}
+                  sx={{ width: '100%'}}
+              />
+              <TextField
+                  label="Lösenord"
+                  type="password"
+                  name="password"
+                  onChange={changeHandler}
+                  sx={{ width: '100%', margin: "1em 0"}}
+              />
+              <br/>
+              <Button 
+                  className="btn-grad" 
+                  variant="contained"
+                  sx={{ margin: '2em', backgroundImage: docsColor.getColor(1)}}
+                  onClick={handleRegister} 
+                  >Registrera användare
+              </Button>
+              <br/>
+          </Box>
+          <Link
+            component="button"
+            variant="body2"
+            onClick={handleClose}
+            >
+            Avbryt registrering
+          </Link>
         </DialogContent>
-
       </Dialog>
 
       </div>

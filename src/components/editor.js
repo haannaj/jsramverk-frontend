@@ -15,13 +15,14 @@ import MailOwners from "./mailInvite";
 import PdfComponent from "./pdffile";
 import ReactHtmlParser from 'react-html-parser'; 
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-
-
-
+import Comments from "./comments";
+import AddComments from "./addComments";
+import CommentIcon from '@mui/icons-material/Comment';
 
 let sendToSocket = false;
 let theIndex = null;
 let index = null;
+
 
 function changeSendToSocket(value) {
   sendToSocket = value;
@@ -47,7 +48,27 @@ const EditorDocs = (token) => {
   const [owners, setOwners] = React.useState('');
   const [ownersName, setOwnersName] = React.useState([]);
   const buttonSection = React.useRef(null);
+  const [comment, setComment] = React.useState("");
   
+
+  // Marked string in editor
+  const handleMouseUp = () => {
+    console.log(`Selected text: ${window.getSelection().toString()}`);
+    setComment(window.getSelection().toString())
+  }
+
+
+  // Open/Close comments
+  function OpenCloseComments() {
+    var x = document.getElementById("myDIV");
+
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block"; 
+    }
+  }
+
 
   // Scrolldown function
   const scrollDown = (ref) => {
@@ -57,11 +78,11 @@ const EditorDocs = (token) => {
     });
   };
 
+
   // Update editor
   const updateEditor = (x) => {
     element.editor.setSelectedRange([0, 10000])
     element.editor.deleteInDirection("backwards")
-    // element.editor.insertString(x)
     element.editor.insertHTML(x)
 
   };
@@ -105,18 +126,6 @@ const EditorDocs = (token) => {
             "data": editor });
     setSaveEdit(editor);
 
-    // var rect = element.editor.getClientRectAtPosition(12)
-    // var tret = element.editor.getSelectedRange()
-
-    // console.log(tret)
-    // console.log([rect.left, rect.top]);
-    // console.log([tret.left]);
-
-    // setShowUser(true);
-
-    // setAmount({ "index": index,
-    //         "data": text });
-    // setSaveEdit(text);
   };
   
   // Handle editor when clicked document
@@ -140,6 +149,7 @@ const EditorDocs = (token) => {
 
   // Handle updatebutton
   async function handleUpdate() { 
+
       const obj = {
         _id: (allDocs[index]["_id"]),
         namn: headName,
@@ -152,6 +162,7 @@ const EditorDocs = (token) => {
       updateEditor('');
       setShowUser(false);
       setOwners('');
+      createIndex(null);
 
     };
 
@@ -177,6 +188,7 @@ const EditorDocs = (token) => {
 
   useEffect(() => {
     (async () => {
+      console.log("fetching all")
       await fetchDocs();
       }
     )();
@@ -238,27 +250,53 @@ const EditorDocs = (token) => {
           )}
         </Grid>
       </Box>
+      
       <Box sx={{
         bgcolor: 'white ',
         margin: '2rem 0',
-        padding: '2em 15%'
+        padding: '2em 5%',
        }} >
-        <TextField
-            label="Rubrik"
-            value={headName}
-            onChange={handleTextInputChange}
-            sx={{ margin: '1rem 0' }}
-          />
-        <TrixEditor 
-          className="trix-texteditor"
-          placeholder="Skapa ett nytt dokument"
-          onChange={handleChange}
-          onEditorReady={handleEditorReady}
-        />
-        <br/>
-        <Users setOwnersName={setOwnersName} owners={owners}/>
-        <br/>
-        <Box sx={{  margin: "2em 0", display: "flex", justifyContent: "space-between" }}>
+        <Box sx={{ display: "flex" }}>
+          <Box sx={{ width: "100%" }}> 
+            <Box sx={{ display: "flex", justifyContent: "space-between"}}> 
+              <TextField
+                  label="Rubrik"
+                  value={headName}
+                  onChange={handleTextInputChange}
+                  sx={{ margin: '1rem 0' }}
+                />
+              <Button 
+                color="button"
+                variant="contained"
+                sx={{ 
+                  height: "20%",
+                }}
+                onClick={OpenCloseComments} 
+                ><CommentIcon sx={{ 
+                  fontSize: "medium"
+                }} />
+              </Button>
+            </Box>
+            <div onMouseUp={handleMouseUp}>
+              <TrixEditor 
+                className="trix-texteditor"
+                placeholder="Skapa ett nytt dokument"
+                onChange={handleChange}
+                onEditorReady={handleEditorReady}
+              />
+            </div>
+            <br/>
+            <Box sx={{ display: "flex", justifyContent: "space-between"}} 
+                ref={buttonSection}
+                > 
+              <Users setOwnersName={setOwnersName} owners={owners} />
+              <AddComments comment={comment} user={(token.userID)} setShowUser={setShowUser} index={index} docID={allDocs} />
+            </Box>
+            <br/>
+          </Box>
+            <Comments comments={ (index) ? (allDocs[index]['comments']) : null} />
+        </Box>
+        <Box sx={{ marginTop: "4em", display: "flex", justifyContent: "space-between" }}>
           <Button 
             color="button"
             variant="contained"
@@ -268,27 +306,26 @@ const EditorDocs = (token) => {
             }}
             startIcon={<AddIcon />}
             onClick={handleClick} 
-            >Skapa nytt dokument
+            >Skapa nytt
           </Button>
           <Box>
             <Button 
               color="button"
               variant="contained"
-              ref={buttonSection} 
               startIcon={<SaveAltIcon />}
               disabled={(index===null) || (headName==='') || (saveEdit==='') } 
               onClick={handleUpdate} 
-              >Spara ändringar
+              >Spara
             </Button>
             <PdfComponent text={saveEdit} header={headName} owner={owners} />
-            <MailOwners setOwnersName={setOwnersName} owner={owners} index={index} header={headName} docId={allDocs} />
+            <MailOwners index={index} header={headName} docId={allDocs} />
             <Button 
               sx={{ backgroundImage: 'linear-gradient(to right, #485563 0%, #29323c  51%, #485563  100%)' }}
               variant="contained"
               startIcon={<CloseIcon />}
               disabled={ (saveEdit==='') && (headName==='') } 
               onClick={handleClose} 
-              >AVBRYT
+              >Avbryt
             </Button>
           </Box>
         </Box>
@@ -301,3 +338,4 @@ export default EditorDocs;
 
 
          
+
